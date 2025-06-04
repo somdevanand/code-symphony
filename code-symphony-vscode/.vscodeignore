@@ -1,22 +1,45 @@
-.vscode/**
-.vscode-test/**
-node_modules/**
+# Build output - Exclude test output from the 'out' directory
 out/test/**
+# Exclude packaged VSIX files from being re-packaged
+*.vsix
+
+# Source TypeScript files (compiled JavaScript from 'out/' directory is used)
 src/**
-*.md
-*.yml
-.*ignore
-*.json
-!package.json
-!package-lock.json
-tsconfig.json
-webpack.config.js
+
+# VS Code specific development and test configuration
+.vscode/**
+.vscode-test/** # Can be for legacy test runners or specific test setups
+
+# Git specific files - Should not be part of the package
+.git/**
+.gitignore
 .gitattributes
+
+# Development configuration files not typically needed in the final package
+tsconfig.json
 .eslintrc.json
-# Ensure compiled output IS included (anything not ignored is included)
-# The 'out' directory (excluding out/test) will be included by default
-# unless explicitly ignored. We have 'out/test/**' ignored, so other 'out' files are included.
-# No need to explicitly state 'out/**' if we are not ignoring 'out' by default.
-# If 'main' in package.json is './out/extension.js', then 'out' must not be ignored.
-# The typical .vscodeignore does not list 'out/' because it's meant to be included.
-# Listing src/** is common to exclude the raw TypeScript sources from the VSIX.
+# webpack.config.js # Keep if you might add webpack, remove if definitely not using
+
+# OS-generated files
+.DS_Store
+*.log
+
+# Other common ignores
+# *.yml # Uncomment if you have YAML files that shouldn't be packaged
+
+# IMPORTANT: node_modules is NOT ignored here by default.
+# This allows 'vsce package' to bundle runtime 'dependencies' from package.json.
+# 'devDependencies' are not packaged. If you have specific large modules in 'dependencies'
+# that are actually development tools or platform-specific, you might need to
+# add them here explicitly to exclude them, or move them to devDependencies.
+
+# Ensure essential files like README.md and CHANGELOG.md are included by NOT ignoring them.
+# By default, files are included unless matched by a pattern here.
+# *.md was removed to ensure README.md is included.
+
+# Control for JSON files:
+# package.json is always included by vsce.
+# package-lock.json is typically not needed in the package; exclude it.
+package-lock.json
+
+# Any other specific files or patterns to ignore can be added below.

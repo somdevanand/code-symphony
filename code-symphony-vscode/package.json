@@ -4,6 +4,11 @@
   "description": "Plays musical chords and melodies based on your coding actions in VS Code.",
   "version": "0.0.1",
   "publisher": "JulesDeveloper",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "repository": {
+    "type": "git",
+    "url": "YOUR_GIT_REPOSITORY_URL_HERE"
+  },
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -16,11 +21,12 @@
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "./node_modules/.bin/tsc -p ./",
+    "watch": "./node_modules/.bin/tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "package": "npx vsce package --no-dependencies"
   },
   "contributes": {
     "configuration": {
@@ -34,8 +40,8 @@
         "codeSymphony.volume": {
           "type": "number",
           "default": 0.3,
-          "minimum": 0.0,
-          "maximum": 1.0,
+          "minimum": 0,
+          "maximum": 1,
           "description": "Master volume for Code Symphony sounds (0.0 to 1.0)."
         }
       }
@@ -45,10 +51,12 @@
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
+    "@types/play-sound": "^1.1.2",
     "@types/vscode": "^1.75.0",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "@vscode/test-electron": "^2.3.0",
+    "@vscode/vsce": "^3.4.2",
     "eslint": "^8.36.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",

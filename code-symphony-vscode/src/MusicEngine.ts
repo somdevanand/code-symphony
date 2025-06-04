@@ -1,4 +1,4 @@
-import * as ps from 'play-sound';
+import ps from 'play-sound'; // Changed from "import * as ps"
 import * as path from 'path'; // For constructing paths
 import * as vscode from 'vscode'; // For getting extension path
 

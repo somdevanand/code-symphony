@@ -47,7 +47,7 @@ To build the Code Symphony extension from source:
     ```bash
     npx vsce package
     ```
-    This command uses the `vsce` (Visual Studio Code Extensions) tool. If you don't have it installed globally, you can install it with `npm install -g @vscode/vsce`.
+    This command uses the `vsce` (Visual Studio Code Extensions) tool. If you don't have it installed globally, you can install it with `npm install -g @vscode/vsce`. (Note: it's also listed as a devDependency, so `npx vsce package` from the project root after `npm install` should work).
 
 ## Installation
 
@@ -112,3 +112,58 @@ Contributions are welcome! If you have ideas for new features, improvements, bug
 ## License
 
 This project is provisionally licensed under the MIT License. (A formal LICENSE file will be added in a future step).
+
+## Packaging and Publishing
+
+This section describes how to package the extension into a `.vsix` file for local installation or distribution, and outlines the steps for publishing to the Visual Studio Code Marketplace.
+
+### Packaging
+
+To package the extension into a `.vsix` file:
+
+1.  **Install Dependencies**: Ensure you have installed all Node.js dependencies:
+    ```bash
+    npm install
+    ```
+2.  **Run the Package Script**: Use the npm script defined in `package.json`:
+    ```bash
+    npm run package
+    ```
+    This command utilizes `vsce package --no-dependencies` to bundle the extension. It will create a file named `code-symphony-vscode-[version].vsix` in the project root directory (e.g., `code-symphony-vscode-0.0.1.vsix`). This `.vsix` file can then be installed into VS Code as described in the "Installation" section.
+
+### Publishing to VS Code Marketplace (Outline)
+
+Publishing the extension makes it available to all VS Code users through the official Marketplace. This process requires you to have a Publisher ID.
+
+**Prerequisites**:
+
+*   **`vsce` Tool**: Ensure `@vscode/vsce` is installed (it's a devDependency, so `npm install` followed by using `npx vsce` or the npm script `npm run package` should cover it for local use. For global use, or if you prefer: `npm install -g @vscode/vsce`).
+*   **Azure DevOps Organization**: You'll need an Azure DevOps organization to create a publisher.
+*   **Personal Access Token (PAT)**: Generate a PAT from your Azure DevOps organization with the "Marketplace (publish)" scope.
+*   **Publisher ID**: Create a publisher ID through the Visual Studio Marketplace portal. Your `package.json` file must include this `publisher` ID (e.g., the "JulesDeveloper" placeholder needs to be updated to your actual ID).
+
+**General Steps (to be performed by you with your credentials)**:
+
+1.  **Update `package.json`**:
+    *   Ensure the `publisher` field in `package.json` is set to your unique publisher ID.
+    *   It's recommended to increment the `version` number for each new release.
+2.  **Login (Optional, if not using PAT for all operations)**:
+    *   You can login to vsce with your publisher name:
+        ```bash
+        npx vsce login <your-publisher-name>
+        ```
+3.  **Package (if not already done)**:
+    *   `npm run package`
+4.  **Publish**:
+    *   Using a Personal Access Token (PAT) is recommended:
+        ```bash
+        npx vsce publish --pat <your-personal-access-token>
+        ```
+    *   Alternatively, if you are logged in:
+        ```bash
+        npx vsce publish
+        ```
+
+**Further Information**:
+
+*   For detailed and up-to-date instructions, please refer to the official VS Code documentation: [Publishing Extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
