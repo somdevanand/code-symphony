@@ -1,0 +1,22 @@
+.vscode/**
+.vscode-test/**
+node_modules/**
+out/test/**
+src/**
+*.md
+*.yml
+.*ignore
+*.json
+!package.json
+!package-lock.json
+tsconfig.json
+webpack.config.js
+.gitattributes
+.eslintrc.json
+# Ensure compiled output IS included (anything not ignored is included)
+# The 'out' directory (excluding out/test) will be included by default
+# unless explicitly ignored. We have 'out/test/**' ignored, so other 'out' files are included.
+# No need to explicitly state 'out/**' if we are not ignoring 'out' by default.
+# If 'main' in package.json is './out/extension.js', then 'out' must not be ignored.
+# The typical .vscodeignore does not list 'out/' because it's meant to be included.
+# Listing src/** is common to exclude the raw TypeScript sources from the VSIX.
